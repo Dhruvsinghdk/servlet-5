@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        Enter Name : <input type="text" name="fname"><br>
+        Enter last : <input type="text" name="lname"><br>
+        Enter city : <input type="text" name="city"><br>
+        Enter email : <input type="text" name="email"><br>
+        <input type="checkbox" value="checked"> Accept Terms & Condition
+        <input type="submit" value="register">
+    </form>
+
+    <a href="index.html">click here</a>
+</body>
+</html>
+
+
+// new servlet
+package abc;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/nexturl")
+
+public class newservlet extends HttpServlet{
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		
+		res.setContentType("text/html");
+		PrintWriter p = res.getWriter();
+		
+		p.println("You have successfully registered");
+		p.println();
+		
+		RequestDispatcher r = req.getRequestDispatcher("home.html");
+		r.include(req, res);
+		
+	}
+	
+}
+/////////////////////////////////////////////////////////////
+// main servlet
+package abc;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@WebServlet("/url")
+
+public class Myservlet extends HttpServlet {
+	
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+		
+		res.setContentType("text/html");
+		String fname = req.getParameter("fname");
+		String lname = req.getParameter("lname");
+		String city = req.getParameter("city");
+		String email = req.getParameter("email");
+		String check = req.getParameter("check");
+		
+		PrintWriter p = res.getWriter();
+		
+		if(check!=null) {
+			p.println(fname);
+			p.println(lname);
+			p.println(city);
+			p.println(email);
+			p.println(check);
+			RequestDispatcher rd = req.getRequestDispatcher("nexturl");
+			rd.forward(req, res);
+		}
+		else {
+			p.println("first accept terms and condition");
+			RequestDispatcher r = req.getRequestDispatcher("index.html");
+			r.include(req, res);
+		}
+		
+		
+		
+	}
+	
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form methord = "post" action="url">
+        Enter Name : <input type="text" name="fname"><br>
+        Enter last : <input type="text" name="lname"><br>
+        Enter city : <input type="text" name="city"><br>
+        Enter email : <input type="text" name="email"><br>
+        <input type="checkbox" name="check" value="checked"> Accept Terms & Condition<br>
+        <input type="submit" value="register">
+    </form>
+
+</body>
+</html>
+///////////////////////////////////////////////////////////////
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<a href="index.html">click here</a>
+
+</body>
+</html>///////////////////////////////////////////
+
+
+
+<!-- webxml -->
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+  <display-name>Servlet5</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>home.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+</web-app>
